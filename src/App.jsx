@@ -43,7 +43,7 @@ function Header() {
         }}>UoR</div>
         <div>
           <div style={{ fontSize: '0.75rem', opacity: 0.75, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-            Digital Technology Services
+            School of Mathematical, Physical and Computational Sciences
           </div>
           <div style={{ fontWeight: 700, fontSize: '1.1rem', lineHeight: 1.2 }}>
             AI &amp; LLM Tools — Staff Input Survey
@@ -65,7 +65,7 @@ function Footer() {
       textAlign: 'center',
       marginTop: '2rem',
     }}>
-      University of Reading · Digital Technology Services · {new Date().getFullYear()}
+      University of Reading · School of Mathematical, Physical and Computational Sciences · {new Date().getFullYear()}
     </footer>
   )
 }

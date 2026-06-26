@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     // Flatten arrays to semicolon-separated strings for Google Sheets columns
     const flat = {
       submittedAt: body.submittedAt || new Date().toISOString(),
-      role: (body.role || []).join('; '),
+      role: body.role || '',
       school: body.school || '',
       currentTools: (body.currentTools || []).join('; '),
       frequency: body.frequency || '',

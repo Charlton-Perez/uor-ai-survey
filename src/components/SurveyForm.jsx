@@ -3,32 +3,10 @@ import { card, btn, btnSecondary, fieldset, legend, hint, label, input, textarea
 
 const SECTIONS = ['About You', 'Current AI Use', 'Research', 'Teaching', 'Professional Tasks', 'LLM Services', 'Support & Concerns']
 
-const SCHOOLS = [
-  'Agriculture, Policy and Development',
-  'Archaeology, Geography and Environmental Science',
-  'Arts and Communication Design',
-  'Biological Sciences',
-  'Built Environment',
-  'Business',
-  'Chemistry, Food and Pharmacy',
-  'Construction Management and Engineering',
-  'Education',
-  'English Language and Applied Linguistics',
-  'Film, Theatre and Television',
-  'Health Sciences',
-  'History, Philosophy and Social Sciences (SHLCS)',
-  'Institute of Education',
-  'Law',
-  'Literature and Languages',
+const DEPARTMENTS = [
+  'Computer Science',
   'Mathematics and Statistics',
   'Meteorology',
-  'Politics, Economics and International Relations',
-  'Psychology and Clinical Language Sciences',
-  'Systems Engineering',
-  'Typography and Graphic Communication',
-  'Professional Services',
-  'Library',
-  'Other / Prefer not to say',
 ]
 
 const LLM_TOOLS = [
@@ -185,7 +163,7 @@ function Scale({ name, value, onChange, low = 'Not at all', high = 'Extremely', 
 
 const EMPTY = {
   // S1
-  role: [],
+  role: '',
   school: '',
   // S2
   currentTools: [],
@@ -196,7 +174,7 @@ const EMPTY = {
   researchDataConcern: '',
   // S4
   teachingUses: [],
-  teachingCategory: '',
+  teachingCategory: [],
   // S5
   adminUses: [],
   // S6
@@ -216,8 +194,8 @@ export default function SurveyForm({ onComplete }) {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
-  const isResearcher = data.role.some(r => r === 'research_staff' || r === 'pgr')
-  const isTeacher = data.role.some(r => r === 'teaching_staff' || r === 'teaching_research')
+  const isResearcher = data.role === 'research_staff'
+  const isTeacher = data.role === 'teaching_staff' || data.role === 'teaching_research'
 
   function setField(field, value) {
     setData(d => ({ ...d, [field]: value }))
@@ -239,8 +217,8 @@ export default function SurveyForm({ onComplete }) {
   function visibleSections() {
     const all = [0, 1, 2, 3, 4, 5, 6]
     return all.filter(s => {
-      if (s === 2) return isResearcher || data.role.length === 0
-      if (s === 3) return isTeacher || data.role.length === 0
+      if (s === 2) return isResearcher || data.role === ''
+      if (s === 3) return isTeacher || data.role === ''
       return true
     })
   }
@@ -336,26 +314,25 @@ function Section0({ data, setField, toggleCheck }) {
       <p style={sectionSubtitle}>This helps us understand how needs differ across role types. All responses are anonymous.</p>
 
       <fieldset style={fieldset}>
-        <legend style={legend}>Which of the following best describes your role(s) at UoR? <span style={{ color: 'var(--uor-teal)' }}>(select all that apply)</span></legend>
+        <legend style={legend}>Which of the following best describes your role at UoR?</legend>
         {[
-          { id: 'research_staff', label: 'Research-only staff (Research Fellow, RA, PI, etc.)' },
-          { id: 'teaching_research', label: 'Teaching and research staff (Lecturer, Associate/Full Professor, etc.)' },
-          { id: 'teaching_staff', label: 'Teaching-focused staff (Teaching Fellow, Tutor, etc.)' },
-          { id: 'pgr', label: 'Postgraduate Researcher (PhD, MRes, etc.)' },
-          { id: 'professional', label: 'Professional / administrative staff' },
-          { id: 'other_role', label: 'Other / prefer not to say' },
+          { id: 'research_staff', label: 'Research and Innovation (RI) academic' },
+          { id: 'teaching_research', label: 'Teaching and Research (T&R) academic' },
+          { id: 'teaching_staff', label: 'Teaching and Innovation (TI) academic' },
+          { id: 'professional', label: 'Executive Support' },
+          { id: 'other_role', label: 'Other' },
         ].map(opt => (
-          <Checkbox key={opt.id} name="role" value={opt.id} checked={data.role.includes(opt.id)} onChange={() => toggleCheck('role', opt.id)}>
+          <Radio key={opt.id} name="role" value={opt.id} checked={data.role === opt.id} onChange={() => setField('role', opt.id)}>
             {opt.label}
-          </Checkbox>
+          </Radio>
         ))}
       </fieldset>
 
       <fieldset style={fieldset}>
-        <legend style={legend}>School or Service</legend>
+        <legend style={legend}>Department</legend>
         <select value={data.school} onChange={e => setField('school', e.target.value)} style={{ ...input, maxWidth: 400 }}>
           <option value="">— Please select —</option>
-          {SCHOOLS.map(s => <option key={s} value={s}>{s}</option>)}
+          {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
         </select>
       </fieldset>
     </div>
@@ -454,10 +431,10 @@ function Section3({ data, setField, toggleCheck }) {
       </fieldset>
 
       <fieldset style={fieldset}>
-        <legend style={legend}>Which assessment categories do you currently use in your modules?</legend>
+        <legend style={legend}>Which assessment categories do you currently use in your modules? <span style={{ color: 'var(--uor-teal)' }}>(select all that apply)</span></legend>
         <p style={hint}>As defined in the Assessment Handbook Section 5.9.</p>
-        {['Category 1 only (AI not permitted)', 'Category 2 (AI permitted to support learning)', 'Category 3 (AI actively used)', 'A mix of categories', 'Not applicable / I don\'t set assessments'].map(v => (
-          <Radio key={v} name="teachingCategory" value={v} checked={data.teachingCategory === v} onChange={() => setField('teachingCategory', v)}>{v}</Radio>
+        {['Category 1 (AI not permitted)', 'Category 2 (AI permitted to support learning)', 'Category 3 (AI actively used in assessment)', 'Not applicable / I don\'t set assessments'].map(v => (
+          <Checkbox key={v} name="teachingCategory" value={v} checked={data.teachingCategory.includes(v)} onChange={() => toggleCheck('teachingCategory', v)}>{v}</Checkbox>
         ))}
       </fieldset>
     </div>
