@@ -14,12 +14,12 @@ export default function ThankYou() {
         Thank you for your response
       </h1>
       <p style={{ color: '#4a5568', marginBottom: '1rem' }}>
-        Your input has been recorded and will contribute to the University of Reading Digital Technology Services
-        evidence base for AI/LLM tool procurement and support planning.
+        Your input has been recorded and will contribute to the MPCS evidence base for DTS colleagues
+        on AI/LLM tool procurement and support planning.
       </p>
       <p style={{ color: '#4a5568', marginBottom: '1.5rem' }}>
         A summary report will be shared with colleagues once the survey period closes. If you have
-        further questions, please contact the DTS team.
+        further questions, please contact the Head of School.
       </p>
       <div style={{
         background: '#eef4fb',
