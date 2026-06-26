@@ -40,12 +40,25 @@ export default async function handler(req, res) {
       freeText: body.freeText || '',
     }
 
-    const upstream = await fetch(webhookUrl, {
+    const payload = JSON.stringify(flat)
+
+    // Google Apps Script redirects POSTs — follow the redirect manually
+    // so the body is preserved
+    let upstream = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(flat),
-      redirect: 'follow',
+      body: payload,
+      redirect: 'manual',
     })
+
+    if (upstream.status === 301 || upstream.status === 302) {
+      const redirectUrl = upstream.headers.get('location')
+      upstream = await fetch(redirectUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+      })
+    }
 
     if (!upstream.ok) {
       const text = await upstream.text()
