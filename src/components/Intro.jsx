@@ -9,9 +9,9 @@ export default function Intro({ onStart }) {
           How should we use AI and LLMs at the University of Reading?
         </h1>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-          Digital Technology Services (DTS) is gathering staff input to inform our approach to procuring and
-          supporting Large Language Model (LLM) tools — such as Microsoft Copilot, ChatGPT, Claude, and Gemini —
-          for research, teaching, and professional services.
+          The School of Mathematical, Physical and Computational Sciences (MPCS) is gathering staff input
+          to inform our approach to procuring and supporting Large Language Model (LLM) tools — such as
+          Microsoft Copilot, ChatGPT, Claude, and Gemini — for research, teaching, and professional services.
         </p>
         <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
           This survey takes approximately <strong>5–8 minutes</strong>. Your responses are anonymous and will
