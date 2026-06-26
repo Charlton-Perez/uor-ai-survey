@@ -16,19 +16,19 @@ This stores every survey response as a row in a Google Sheet you own.
 const SHEET_NAME = 'Responses';
 
 const COLUMNS = [
-  'Submitted At', 'Role(s)', 'School / Service',
+  'Submitted At', 'Role', 'Department',
   'Current Tools', 'Frequency',
   'Research Uses', 'Disclosure Confidence', 'Research Data Concern (1–5)',
-  'Teaching Uses', 'Assessment Category',
+  'Teaching Uses', 'Assessment Categories',
   'Admin Uses',
   'Preferred Tool', 'Important Features', 'Procurement Urgency',
   'Concerns', 'Training Needs', 'Privacy Concern Scale',
   'Free Text Comments'
 ];
 
-function doPost(e) {
+function doGet(e) {
   try {
-    const data = JSON.parse(e.postData.contents);
+    const data = JSON.parse(decodeURIComponent(e.parameter.payload));
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     let sheet = ss.getSheetByName(SHEET_NAME);
     if (!sheet) {
