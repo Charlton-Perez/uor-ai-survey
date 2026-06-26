@@ -42,11 +42,13 @@ export default async function handler(req, res) {
 
     // Send as GET with payload param — avoids Apps Script POST redirect issues
     const url = `${webhookUrl}?payload=${encodeURIComponent(JSON.stringify(flat))}`
+    console.log('Calling webhook URL:', webhookUrl)
     const upstream = await fetch(url, { method: 'GET' })
+    const responseText = await upstream.text()
+    console.log('Webhook response status:', upstream.status)
+    console.log('Webhook response body:', responseText)
 
     if (!upstream.ok) {
-      const text = await upstream.text()
-      console.error('Webhook error:', upstream.status, text)
       return res.status(502).json({ error: 'Failed to store response' })
     }
 
