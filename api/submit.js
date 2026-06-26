@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       researchDisclosure: body.researchDisclosure || '',
       researchDataConcern: body.researchDataConcern || '',
       teachingUses: (body.teachingUses || []).join('; '),
-      teachingCategory: body.teachingCategory || '',
+      teachingCategory: Array.isArray(body.teachingCategory) ? body.teachingCategory.join('; ') : (body.teachingCategory || ''),
       adminUses: (body.adminUses || []).join('; '),
       preferredTool: body.preferredTool || '',
       importantFeatures: (body.importantFeatures || []).join('; '),
@@ -44,6 +44,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(flat),
+      redirect: 'follow',
     })
 
     if (!upstream.ok) {

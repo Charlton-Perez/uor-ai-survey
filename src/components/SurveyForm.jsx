@@ -194,7 +194,7 @@ export default function SurveyForm({ onComplete }) {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
-  const isResearcher = data.role === 'research_staff'
+  const isResearcher = data.role === 'research_staff' || data.role === 'teaching_research'
   const isTeacher = data.role === 'teaching_staff' || data.role === 'teaching_research'
 
   function setField(field, value) {
@@ -217,8 +217,8 @@ export default function SurveyForm({ onComplete }) {
   function visibleSections() {
     const all = [0, 1, 2, 3, 4, 5, 6]
     return all.filter(s => {
-      if (s === 2) return isResearcher || data.role === ''
-      if (s === 3) return isTeacher || data.role === ''
+      if (s === 2) return isResearcher || data.role === ''  // Research: RI + T&R
+      if (s === 3) return isTeacher || data.role === ''     // Teaching: TI + T&R
       return true
     })
   }
@@ -316,9 +316,9 @@ function Section0({ data, setField, toggleCheck }) {
       <fieldset style={fieldset}>
         <legend style={legend}>Which of the following best describes your role at UoR?</legend>
         {[
-          { id: 'research_staff', label: 'Research and Innovation (RI) academic' },
+          { id: 'research_staff', label: 'Research Intensive (RI) academic' },
           { id: 'teaching_research', label: 'Teaching and Research (T&R) academic' },
-          { id: 'teaching_staff', label: 'Teaching and Innovation (TI) academic' },
+          { id: 'teaching_staff', label: 'Teaching Intensive (TI) academic' },
           { id: 'professional', label: 'Executive Support' },
           { id: 'other_role', label: 'Other' },
         ].map(opt => (
