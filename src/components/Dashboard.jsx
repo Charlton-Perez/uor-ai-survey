@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import Papa from 'papaparse'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell,
   PieChart, Pie, Legend
@@ -112,75 +113,64 @@ function Empty() {
   return <p style={{ color: '#aaa', fontSize: '0.85rem', fontStyle: 'italic' }}>No data yet.</p>
 }
 
+// ── CSV uploader ──────────────────────────────────────────────────────────────
+
+function Uploader({ onData }) {
+  const [dragging, setDragging] = useState(false)
+
+  function handleFile(file) {
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (result) => onData(result.data, result.meta.fields || []),
+    })
+  }
+
+  return (
+    <div style={card}>
+      <h1 style={{ fontSize: '1.4rem', color: NAVY, marginBottom: '0.5rem' }}>
+        MPCS AI Survey — Response Dashboard
+      </h1>
+      <p style={{ color: '#4a5568', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
+        In Microsoft Forms go to the <strong>Responses</strong> tab, click <strong>Open in Excel</strong>,
+        then in Excel go to <strong>File &rarr; Save As &rarr; CSV</strong>. Upload that file here.
+      </p>
+      <label
+        onDragOver={e => { e.preventDefault(); setDragging(true) }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={e => { e.preventDefault(); setDragging(false); handleFile(e.dataTransfer.files[0]) }}
+        style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          border: `2px dashed ${dragging ? TEAL : '#b0c4d8'}`, borderRadius: 8,
+          padding: '3rem 2rem', cursor: 'pointer',
+          background: dragging ? '#eef9fb' : '#f8fafc', transition: 'all 0.2s',
+        }}>
+        <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>📂</div>
+        <div style={{ fontWeight: 600, color: NAVY, marginBottom: '0.25rem' }}>
+          Drop CSV file here or click to browse
+        </div>
+        <div style={{ fontSize: '0.8rem', color: '#718096' }}>Microsoft Forms CSV export</div>
+        <input type="file" accept=".csv" style={{ display: 'none' }}
+          onChange={e => handleFile(e.target.files[0])} />
+      </label>
+    </div>
+  )
+}
+
 // ── Main dashboard ────────────────────────────────────────────────────────────
 
 export default function Dashboard() {
-  const [rows, setRows]           = useState(null)
-  const [headers, setHeaders]     = useState([])
-  const [loading, setLoading]     = useState(false)
-  const [error, setError]         = useState(null)
-  const [updatedAt, setUpdatedAt] = useState(null)
+  const [rows, setRows]       = useState(null)
+  const [headers, setHeaders] = useState([])
+  const [loadedAt, setLoadedAt] = useState(null)
 
-  async function fetchData() {
-    setLoading(true)
-    setError(null)
-    try {
-      const res = await fetch(`${import.meta.env.BASE_URL}data.json`)
-      const json = await res.json()
-      if (!res.ok) throw new Error(json.error || `Server error ${res.status}`)
-      setRows(json.rows)
-      setHeaders(json.rows.length ? Object.keys(json.rows[0]) : [])
-      setUpdatedAt(json.updatedAt)
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
+  function onData(data, fields) {
+    setRows(data)
+    setHeaders(fields)
+    setLoadedAt(new Date().toLocaleTimeString('en-GB'))
   }
 
-  useEffect(() => { fetchData() }, [])
-
-  // ── Loading / error states ───────────────────────────────────────────────
-
-  if (loading && !rows) {
-    return (
-      <div style={{ ...card, textAlign: 'center', padding: '4rem' }}>
-        <div style={{ fontSize: '1.5rem', color: NAVY, marginBottom: '0.5rem' }}>Loading responses…</div>
-        <div style={{ color: '#718096', fontSize: '0.9rem' }}>Fetching live data from Microsoft Forms</div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div style={card}>
-        <h2 style={{ color: '#c62828', marginBottom: '0.5rem' }}>Could not load data</h2>
-        <p style={{ color: '#4a5568', marginBottom: '1rem', fontSize: '0.9rem' }}>{error}</p>
-        <button onClick={fetchData} style={{
-          background: NAVY, color: '#fff', border: 'none',
-          borderRadius: 6, padding: '0.5rem 1.25rem', cursor: 'pointer', fontSize: '0.9rem',
-        }}>Try again</button>
-      </div>
-    )
-  }
-
-  if (rows && rows.length === 0) {
-    return (
-      <div style={{ ...card, textAlign: 'center', padding: '4rem' }}>
-        <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>📋</div>
-        <div style={{ fontSize: '1.1rem', color: NAVY, fontWeight: 700, marginBottom: '0.5rem' }}>No responses yet</div>
-        <div style={{ color: '#718096', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-          Data updates every 15 minutes once the survey is live.
-        </div>
-        <button onClick={fetchData} disabled={loading} style={{
-          background: NAVY, color: '#fff', border: 'none',
-          borderRadius: 6, padding: '0.5rem 1.25rem', cursor: 'pointer', fontSize: '0.88rem',
-        }}>↻ Refresh</button>
-      </div>
-    )
-  }
-
-  if (!rows) return null
+  if (!rows) return <Uploader onData={onData} />
 
   // ── Column detection ─────────────────────────────────────────────────────
 
@@ -211,16 +201,16 @@ export default function Dashboard() {
       {/* Header bar */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '1.5rem' }}>
         <div>
-          <h1 style={{ fontSize: '1.4rem', color: NAVY, marginBottom: '0.2rem' }}>MPCS AI Survey — Live Dashboard</h1>
+          <h1 style={{ fontSize: '1.4rem', color: NAVY, marginBottom: '0.2rem' }}>MPCS AI Survey — Results</h1>
           <p style={{ color: '#718096', fontSize: '0.82rem' }}>
-            {n} response{n !== 1 ? 's' : ''} · Last refreshed {updatedAt ? new Date(updatedAt).toLocaleTimeString('en-GB') : '—'}
+            {n} response{n !== 1 ? 's' : ''} · CSV loaded at {loadedAt}
           </p>
         </div>
-        <button onClick={fetchData} disabled={loading} style={{
-          background: loading ? '#a0aec0' : NAVY, color: '#fff', border: 'none',
-          borderRadius: 6, padding: '0.5rem 1.25rem', cursor: loading ? 'default' : 'pointer', fontSize: '0.88rem',
+        <button onClick={() => setRows(null)} style={{
+          background: 'transparent', color: NAVY, border: `1px solid ${NAVY}`,
+          borderRadius: 6, padding: '0.5rem 1.25rem', cursor: 'pointer', fontSize: '0.88rem',
         }}>
-          {loading ? 'Refreshing…' : '↻ Refresh'}
+          Upload new CSV
         </button>
       </div>
 
