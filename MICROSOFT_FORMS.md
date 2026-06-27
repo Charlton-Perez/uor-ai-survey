@@ -1,217 +1,340 @@
 # Microsoft Forms Setup
 
-Go to https://forms.microsoft.com and create a new form titled:
-**"MPCS AI & LLM Tools — Staff Input Survey"**
+Go to https://forms.microsoft.com and click New Form.
 
-Add a description:
-> The School of Mathematical, Physical and Computational Sciences is gathering staff input to inform our approach to Large Language Model (LLM) tool procurement. Takes 5–8 minutes. Responses are anonymous.
+Form title (paste this):
+MPCS AI & LLM Tools -- Staff Input Survey
+
+Form description (paste this):
+The School of Mathematical, Physical and Computational Sciences is gathering staff input to inform our approach to Large Language Model (LLM) tool procurement. This takes 5-8 minutes. Responses are anonymous.
+
+---
+
+## How sections and branching work
+
+Microsoft Forms uses Sections to group questions. You will create 7 sections. Branching is set on the Role question (Q1) so that:
+
+- Research Intensive (RI) -- goes to Section 3 (Research), then continues to Section 5
+- Teaching and Research (T&R) -- goes to Section 3 (Research), then Section 4 (Teaching), then Section 5
+- Teaching Intensive (TI) -- goes to Section 4 (Teaching), then continues to Section 5
+- Executive Support -- goes straight to Section 5 (Professional Tasks)
+- Other -- goes straight to Section 5 (Professional Tasks)
+
+Sections 5, 6 and 7 are seen by everyone.
+
+To set branching: click the three dots (...) on Q1 and choose "Add branching". For each answer option, select the section it should jump to.
+
+Because T&R needs to see both Section 3 and Section 4, set T&R to go to Section 3, and at the end of Section 3 add a question directing T&R respondents to Section 4. Microsoft Forms handles this by setting the last question in Section 3 to branch T&R to Section 4 and RI to Section 5.
 
 ---
 
 ## Section 1: About You
 
-**Q1 — Choice (required, single answer)**
-> Which of the following best describes your role at UoR?
-- Research Intensive (RI) academic
-- Teaching and Research (T&R) academic
-- Teaching Intensive (TI) academic
-- Executive Support
-- Other
+Add a new section titled (paste):
+About You
 
-⚙️ **Set branching on this question:**
-- RI → go to Section 3 (Research)
-- T&R → go to Section 3 (Research)  
-- TI → go to Section 4 (Teaching)
-- Executive Support → go to Section 5 (Professional Tasks)
-- Other → go to Section 5 (Professional Tasks)
+--- Q1 ---
+Question type: Choice (Required, single answer)
 
-**Q2 — Choice (required, single answer)**
-> Department
-- Computer Science
-- Mathematics and Statistics
-- Meteorology
+Question text (paste):
+Which of the following best describes your role at UoR?
+
+Options (one per line, paste):
+Research Intensive (RI) academic
+Teaching and Research (T&R) academic
+Teaching Intensive (TI) academic
+Executive Support
+Other
+
+BRANCHING on this question (click ... then Add branching):
+Research Intensive (RI) academic -- go to Section 3: Research
+Teaching and Research (T&R) academic -- go to Section 3: Research
+Teaching Intensive (TI) academic -- go to Section 4: Teaching
+Executive Support -- go to Section 5: Professional Tasks
+Other -- go to Section 5: Professional Tasks
+
+--- Q2 ---
+Question type: Choice (Required, single answer)
+
+Question text (paste):
+Department
+
+Options (one per line, paste):
+Computer Science
+Mathematics and Statistics
+Meteorology
 
 ---
 
 ## Section 2: Current AI Use
-*(All roles — but this section is skipped for branching; merge into Section 1 or place before branching question)*
 
-> **Tip:** Put Q3 and Q4 before the branching question so everyone sees them.
+Add a new section titled (paste):
+Current AI and LLM Use
 
-**Q3 — Choice (multi-answer)**
-> Which AI or LLM tools do you currently use? (select all that apply)
-> Note: only Microsoft Copilot Chat is currently approved by UoR for University data.
-- Microsoft Copilot Chat (University-approved)
-- ChatGPT (personal/free account)
-- ChatGPT Plus/Team/Enterprise
-- Claude (Anthropic)
-- Google Gemini
-- GitHub Copilot (coding)
-- Grammarly or similar writing tools
-- Domain-specific AI tools (e.g. Elicit, Research Rabbit, SciSpace)
-- Other
-- None — I do not currently use AI/LLM tools
+--- Q3 ---
+Question type: Choice (Multiple answers allowed)
 
-**Q4 — Choice (required, single answer)**
-> How often do you use AI/LLM tools in your work?
-- Daily
-- Several times a week
-- Weekly
-- Monthly or less
-- Never
+Question text (paste):
+Which AI or LLM tools do you currently use? Select all that apply.
+
+Subtitle (paste):
+Note: only Microsoft Copilot Chat is currently approved by UoR for use with University data.
+
+Options (one per line, paste):
+Microsoft Copilot Chat (University-approved)
+ChatGPT (personal or free account)
+ChatGPT Plus, Team or Enterprise
+Claude (Anthropic)
+Google Gemini
+GitHub Copilot (coding)
+Grammarly or similar writing tools
+Domain-specific AI tools (e.g. Elicit, Research Rabbit, SciSpace)
+Other
+None -- I do not currently use AI or LLM tools
+
+--- Q4 ---
+Question type: Choice (Required, single answer)
+
+Question text (paste):
+How often do you use AI or LLM tools in your work?
+
+Options (one per line, paste):
+Daily
+Several times a week
+Weekly
+Monthly or less
+Never
 
 ---
 
 ## Section 3: Research Uses
-*(Shown to RI and T&R academics only)*
 
-Add subtitle:
-> The University's AI Use in Research guidance distinguishes between AI supporting research (efficiency tools) and AI as a research component (core method). See: reading.ac.uk/research-innovation-hub/managing-your-research/ai-use-in-research-and-innovation
+Add a new section titled (paste):
+Research Uses
 
-**Q5 — Choice (multi-answer)**
-> Which research uses are you interested in or already doing? (select all that apply)
-- Literature searching and summarisation
-- Drafting or improving research writing (papers, grant bids, reports)
-- Data analysis, interpretation or visualisation
-- Code generation or debugging
-- Research ideation, brainstorming or hypothesis generation
-- Reviewing manuscripts or grant applications
-- Translation or language editing
-- AI as a core research method or component (e.g. NLP, computer vision)
-- Other research use
+Section description (paste):
+The University's AI Use in Research guidance distinguishes between AI supporting research (efficiency tools such as writing, summarising and coding) and AI as a research component (where AI is a core method). See: reading.ac.uk/research-innovation-hub/managing-your-research/ai-use-in-research-and-innovation
 
-**Q6 — Choice (single answer)**
-> How confident are you about disclosure requirements for AI use in your research outputs?
-- Very confident
-- Fairly confident
-- Uncertain
-- Not confident at all
-- Not applicable to my role
+--- Q5 ---
+Question type: Choice (Multiple answers allowed)
 
-**Q7 — Rating (1–5)**
-> How concerned are you about data privacy when using AI tools with research data?
-> (1 = Not concerned, 5 = Very concerned)
+Question text (paste):
+Which of the following research uses are you interested in or already doing? Select all that apply.
 
-⚙️ **Branching:** If role was T&R → go to Section 4. If role was RI → go to Section 5.
+Options (one per line, paste):
+Literature searching and summarisation
+Drafting or improving research writing (papers, grant bids, reports)
+Data analysis, interpretation or visualisation
+Code generation or debugging
+Research ideation, brainstorming or hypothesis generation
+Reviewing manuscripts or grant applications
+Translation or language editing
+AI as a core research method or component (e.g. NLP, computer vision)
+Other research use
+
+--- Q6 ---
+Question type: Choice (Required, single answer)
+
+Question text (paste):
+How confident are you about the disclosure requirements for AI use in your research outputs?
+
+Subtitle (paste):
+Publishers, funders and the University require disclosure of significant AI assistance in papers, grant applications and reports.
+
+Options (one per line, paste):
+Very confident
+Fairly confident
+Uncertain
+Not confident at all
+Not applicable to my role
+
+--- Q7 ---
+Question type: Rating (1 to 5, label as: 1 = Not concerned, 5 = Very concerned)
+
+Question text (paste):
+How concerned are you about data privacy when using AI tools with research data?
+
+Subtitle (paste):
+For example, uploading datasets, interview transcripts or unpublished results to cloud-based LLM tools.
+
+BRANCHING at end of Section 3:
+Add a final question to this section asking T&R respondents to continue:
+
+--- Q7b (routing question for T&R only) ---
+Question type: Choice (single answer)
+Question text (paste):
+Are you also involved in teaching?
+
+Options (one per line, paste):
+Yes -- I teach as well as research
+No -- research only
+
+BRANCHING on this question:
+Yes -- go to Section 4: Teaching
+No -- go to Section 5: Professional Tasks
 
 ---
 
 ## Section 4: Teaching Uses
-*(Shown to T&R and TI academics only)*
 
-Add subtitle:
-> See CQSD AI guidance: reading.ac.uk/cqsd/artificial-intelligence. This section focuses on staff use of LLMs in teaching, not student use.
+Add a new section titled (paste):
+Teaching Uses
 
-**Q8 — Choice (multi-answer)**
-> Which teaching tasks do you currently use (or would like to use) LLMs for? (select all that apply)
-- Lesson planning and curriculum design
-- Creating teaching materials, slides or handouts
-- Drafting or personalising student feedback
-- Supporting marking (e.g. rubric application, consistency checking)
-- Accessibility (e.g. generating transcripts, alternative formats)
-- Teaching students about AI literacy and responsible use
-- Module design including AI-based assessments (Category 3)
-- Other teaching use
+Section description (paste):
+See CQSD AI guidance for staff at reading.ac.uk/cqsd/artificial-intelligence. This section is about staff use of LLMs in teaching, not student use.
 
-**Q9 — Choice (multi-answer)**
-> Which assessment categories do you currently use in your modules? (select all that apply)
-> As defined in Assessment Handbook Section 5.9.
-- Category 1 (AI not permitted)
-- Category 2 (AI permitted to support learning)
-- Category 3 (AI actively used in assessment)
-- Not applicable / I don't set assessments
+--- Q8 ---
+Question type: Choice (Multiple answers allowed)
 
-⚙️ **Branching:** End of section → go to Section 5
+Question text (paste):
+Which teaching tasks do you currently use or would like to use LLMs for? Select all that apply.
+
+Options (one per line, paste):
+Lesson planning and curriculum design
+Creating teaching materials, slides or handouts
+Drafting or personalising student feedback
+Supporting marking (e.g. rubric application, consistency checking)
+Accessibility (e.g. generating transcripts, alternative formats)
+Teaching students about AI literacy and responsible use
+Module design including AI-based assessments (Category 3)
+Other teaching use
+
+--- Q9 ---
+Question type: Choice (Multiple answers allowed)
+
+Question text (paste):
+Which assessment categories do you currently use in your modules? Select all that apply.
+
+Subtitle (paste):
+As defined in Assessment Handbook Section 5.9.
+
+Options (one per line, paste):
+Category 1 (AI not permitted)
+Category 2 (AI permitted to support learning)
+Category 3 (AI actively used in assessment)
+Not applicable -- I don't set assessments
 
 ---
 
-## Section 5: Professional & Administrative Tasks
-*(All roles)*
+## Section 5: Professional and Administrative Tasks
 
-**Q10 — Choice (multi-answer)**
-> Which professional/administrative tasks would you like LLM support for? (select all that apply)
-- Drafting emails and correspondence
-- Summarising documents, papers or reports
-- Meeting notes and minutes
-- Policy, procedure or report writing
-- Data management, spreadsheet analysis or dashboards
-- Project planning or task management
-- Creating presentations
-- Other administrative use
+Add a new section titled (paste):
+Professional and Administrative Tasks
+
+--- Q10 ---
+Question type: Choice (Multiple answers allowed)
+
+Question text (paste):
+Which professional or administrative tasks would you like LLM support for? Select all that apply.
+
+Options (one per line, paste):
+Drafting emails and correspondence
+Summarising documents, papers or reports
+Meeting notes and minutes
+Policy, procedure or report writing
+Data management, spreadsheet analysis or dashboards
+Project planning or task management
+Creating presentations
+Other administrative use
 
 ---
 
 ## Section 6: LLM Service Preferences
 
-**Q11 — Choice (single answer)**
-> If DTS could procure one additional LLM tool, which would be most valuable to you?
-- Microsoft Copilot (integrated into M365 — Teams, Word, Outlook, etc.)
-- ChatGPT Enterprise (OpenAI)
-- Claude for Work / Enterprise (Anthropic)
-- Google Gemini for Workspace
-- GitHub Copilot (coding/development)
-- A specialised research AI tool (e.g. Elicit, Consensus)
-- A University-developed or self-hosted solution
-- No preference — any approved tool
-- I do not want LLM tools procured
+Add a new section titled (paste):
+LLM Service Preferences
 
-**Q12 — Choice (multi-answer, max 4)**
-> Which features matter most to you in an LLM tool? (select up to 4)
-- Data privacy and GDPR compliance
-- Integration with Microsoft 365 (Outlook, Word, Teams, SharePoint)
-- High-quality outputs for academic/research writing
-- Coding / programming support
-- Ability to process large documents
-- Web search / up-to-date information
-- Multi-language support
-- Reasonable cost / value for money
-- Ease of use and low learning curve
-- Institutional admin and access management
+--- Q11 ---
+Question type: Choice (Required, single answer)
 
-**Q13 — Choice (single answer)**
-> How urgently do you feel DTS should procure enhanced LLM access for staff?
-- Very urgently — I need this now
-- In the next 6 months
-- Within the year
-- No rush
-- I don't think we should
+Question text (paste):
+If DTS could procure one additional LLM tool, which would be most valuable to you?
 
----
+Options (one per line, paste):
+Microsoft Copilot (integrated into M365 -- Teams, Word, Outlook, etc.)
+ChatGPT Enterprise (OpenAI)
+Claude for Work or Enterprise (Anthropic)
+Google Gemini for Workspace
+GitHub Copilot (coding and development)
+A specialised research AI tool (e.g. Elicit, Consensus)
+A University-developed or self-hosted solution
+No preference -- any approved tool
+I do not want LLM tools procured
 
-## Section 7: Support & Concerns
+--- Q12 ---
+Question type: Choice (Multiple answers allowed)
 
-**Q14 — Choice (multi-answer)**
-> Which concerns do you have about LLM use at UoR? (select all that apply)
-- Data privacy and confidentiality
-- Academic integrity and student misuse
-- Accuracy and hallucination
-- Intellectual property and copyright
-- Environmental impact / energy use
-- Equity of access
-- Bias in AI outputs
-- Deskilling or over-reliance
-- Lack of transparency in AI decisions
-- Reputational risk to the University
+Question text (paste):
+Which features matter most to you in an LLM tool? Select up to 4.
 
-**Q15 — Choice (multi-answer)**
-> What training or support would be most useful? (select all that apply)
-- An introductory workshop on what LLMs can and cannot do
-- Discipline-specific guidance for researchers
-- Guidance on teaching with/about AI
-- Training on data protection and responsible use
-- Hands-on sessions with specific tools (e.g. Microsoft Copilot)
-- A self-service online resource / FAQ
-- Peer communities of practice
-- Nothing — I feel I have enough knowledge already
+Options (one per line, paste):
+Data privacy and GDPR compliance
+Integration with Microsoft 365 (Outlook, Word, Teams, SharePoint)
+High-quality outputs for academic and research writing
+Coding and programming support
+Ability to process large documents
+Web search and up-to-date information
+Multi-language support
+Reasonable cost and value for money
+Ease of use and low learning curve
+Institutional admin and access management
 
-**Q16 — Text (long answer, optional)**
-> Is there anything else you'd like us to know about your needs or views on AI/LLM tools?
+--- Q13 ---
+Question type: Choice (Required, single answer)
+
+Question text (paste):
+How urgently do you feel DTS should procure enhanced LLM access for staff?
+
+Options (one per line, paste):
+Very urgently -- I need this now
+In the next 6 months
+Within the year
+No rush
+I don't think we should
 
 ---
 
-## Collecting responses for the dashboard
+## Section 7: Support and Concerns
 
-Once you have responses:
-1. In Microsoft Forms, click **Responses** tab → **Open in Excel**
-2. Save/export as CSV
-3. Upload to the dashboard at your survey URL + `/dashboard`
+Add a new section titled (paste):
+Support and Concerns
+
+--- Q14 ---
+Question type: Choice (Multiple answers allowed)
+
+Question text (paste):
+Which concerns do you have about LLM use at UoR? Select all that apply.
+
+Options (one per line, paste):
+Data privacy and confidentiality
+Academic integrity and student misuse
+Accuracy and hallucination (AI presenting false information as fact)
+Intellectual property and copyright
+Environmental impact and energy use
+Equity of access (not all staff having equal access)
+Bias in AI outputs
+Deskilling or over-reliance
+Lack of transparency in how AI makes decisions
+Reputational risk to the University
+
+--- Q15 ---
+Question type: Choice (Multiple answers allowed)
+
+Question text (paste):
+What training or support would be most useful to you? Select all that apply.
+
+Options (one per line, paste):
+An introductory workshop on what LLMs can and cannot do
+Discipline-specific guidance for researchers
+Guidance on teaching with and about AI
+Training on data protection and responsible use
+Hands-on sessions with specific tools (e.g. Microsoft Copilot)
+A self-service online resource or FAQ
+Peer communities of practice (staff sharing examples)
+Nothing -- I feel I have enough knowledge already
+
+--- Q16 ---
+Question type: Text (Long answer, not required)
+
+Question text (paste):
+Is there anything else you would like us to know about your needs or views on AI and LLM tools?
