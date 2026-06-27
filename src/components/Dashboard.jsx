@@ -125,7 +125,7 @@ export default function Dashboard() {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/data')
+      const res = await fetch(`${import.meta.env.BASE_URL}data.json`)
       const json = await res.json()
       if (!res.ok) throw new Error(json.error || `Server error ${res.status}`)
       setRows(json.rows)
@@ -156,16 +156,26 @@ export default function Dashboard() {
       <div style={card}>
         <h2 style={{ color: '#c62828', marginBottom: '0.5rem' }}>Could not load data</h2>
         <p style={{ color: '#4a5568', marginBottom: '1rem', fontSize: '0.9rem' }}>{error}</p>
-        <p style={{ color: '#718096', fontSize: '0.85rem', marginBottom: '1rem' }}>
-          Make sure the four Microsoft Graph environment variables are set in Vercel:
-          <code style={{ display: 'block', background: '#f0f4f8', padding: '0.5rem 0.75rem', borderRadius: 4, marginTop: '0.5rem', fontSize: '0.82rem' }}>
-            MS_TENANT_ID · MS_CLIENT_ID · MS_CLIENT_SECRET · MS_SHARE_URL
-          </code>
-        </p>
         <button onClick={fetchData} style={{
           background: NAVY, color: '#fff', border: 'none',
           borderRadius: 6, padding: '0.5rem 1.25rem', cursor: 'pointer', fontSize: '0.9rem',
         }}>Try again</button>
+      </div>
+    )
+  }
+
+  if (rows && rows.length === 0) {
+    return (
+      <div style={{ ...card, textAlign: 'center', padding: '4rem' }}>
+        <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>📋</div>
+        <div style={{ fontSize: '1.1rem', color: NAVY, fontWeight: 700, marginBottom: '0.5rem' }}>No responses yet</div>
+        <div style={{ color: '#718096', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+          Data updates every 15 minutes once the survey is live.
+        </div>
+        <button onClick={fetchData} disabled={loading} style={{
+          background: NAVY, color: '#fff', border: 'none',
+          borderRadius: 6, padding: '0.5rem 1.25rem', cursor: 'pointer', fontSize: '0.88rem',
+        }}>↻ Refresh</button>
       </div>
     )
   }
