@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths-ignore:
       - 'public/data.json'   # data updates don't trigger a rebuild
+  workflow_dispatch:          # allows manual trigger from GitHub Actions UI
 
 permissions:
   contents: read
