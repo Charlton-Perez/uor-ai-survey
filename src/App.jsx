@@ -1,10 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Intro from './components/Intro.jsx'
 import SurveyForm from './components/SurveyForm.jsx'
 import ThankYou from './components/ThankYou.jsx'
+import Dashboard from './components/Dashboard.jsx'
 
 export default function App() {
-  const [stage, setStage] = useState('intro') // 'intro' | 'survey' | 'done'
+  const [stage, setStage] = useState('intro')
+  const [hash, setHash] = useState(window.location.hash)
+
+  useEffect(() => {
+    const onHash = () => setHash(window.location.hash)
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
+  if (hash === '#dashboard') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <Header />
+        <main style={{ flex: 1, padding: '2rem 1rem', maxWidth: 1100, margin: '0 auto', width: '100%' }}>
+          <Dashboard />
+        </main>
+        <Footer />
+      </div>
+    )
+  }
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
